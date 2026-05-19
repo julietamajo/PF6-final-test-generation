@@ -1,20 +1,16 @@
-def main():
-  print("Hello learners!")
-
 import requests
 
 
 def dish_fetch(num):
 
     url = "https://api-colombia.com/api/v1/TypicalDish"
-  
+
     response = requests.get(url)
 
     if response.status_code == 200:
 
         data = response.json()
 
-        
         if num > 0 and num <= len(data):
 
             item = data[num - 1]
@@ -24,7 +20,6 @@ def dish_fetch(num):
                 "name": item["name"]
             }
 
-    
     return {
         "id": num,
         "name": "Unknown Dish"
@@ -33,9 +28,9 @@ def dish_fetch(num):
 
 def main():
 
-    print("=== Colombian Menu ===")
+    print("=== Colombian Typical Dishes ===")
 
-    number = int(input("Choose a number: "))
+    number = int(input("Choose a dish number: "))
 
     result = dish_fetch(number)
 
