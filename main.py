@@ -3,7 +3,7 @@ import requests
 
 def dish_fetch(num):
 
-    url = "https://api-colombia.com/api/v1/TypicalDish"
+    url = f"https://api-colombia.com/api/v1/TypicalDish/{num}"
 
     response = requests.get(url)
 
@@ -11,14 +11,10 @@ def dish_fetch(num):
 
         data = response.json()
 
-        if num > 0 and num <= len(data):
-
-            item = data[num - 1]
-
-            return {
-                "id": num,
-                "name": item["name"]
-            }
+        return {
+            "id": data["id"],
+            "name": data["name"]
+        }
 
     return {
         "id": num,
@@ -28,16 +24,28 @@ def dish_fetch(num):
 
 def main():
 
+    print("Hello learners!")
     print("=== Colombian Typical Dishes ===")
 
-    number = int(input("Choose a dish number: "))
+    while True:
 
-    result = dish_fetch(number)
+        select_user = input(
+            "\nIngrese el número del plato o escriba 'salir': "
+        )
 
-    print(result)
+        if select_user.lower() == "salir":
+            print("Programa finalizado.")
+            break
+
+        if not select_user.isdigit():
+            print("Ingrese un número válido.")
+            continue
+
+        dish = dish_fetch(int(select_user))
+
+        print(f"\nID del plato: {dish['id']}")
+        print(f"Nombre del plato: {dish['name']}")
 
 
 if __name__ == "__main__":
     main()
-
-
